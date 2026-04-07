@@ -1,0 +1,34 @@
+/ {
+    aliases {
+        my-adc = &adc0;            /* ADC1 */
+        voltage-channel = &adc0_ch0;
+        current-channel = &adc0_ch3;
+    };
+};
+
+/* ADC1 (adc0) configuration */
+&adc0 {
+    status = "okay";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    /* Voltage channel (GPIO36) */
+    adc0_ch0: channel@0 {
+        reg = <0>;
+        zephyr,gain = "ADC_GAIN_1_4";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,vref-mv = <1100>;  /* Typical ESP32 internal Vref ~1100 mV */
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+    };
+
+    /* Current channel (GPIO39) */
+    adc0_ch3: channel@3 {
+        reg = <3>;
+        zephyr,gain = "ADC_GAIN_1_4";
+        zephyr,reference = "ADC_REF_INTERNAL";
+        zephyr,vref-mv = <1100>;
+        zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+        zephyr,resolution = <12>;
+    };
+};
